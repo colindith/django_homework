@@ -16,6 +16,16 @@
 </ul>
 {% endif %}
 
+<!--show the submitting time if the status is PENDING-->
+{% if application.status == "PENDING" %}
+<p> Submitting time: {{ application.submitted_at }} </p>
+{% endif %}
+
+<!--show the approval time if the status is APPROVED-->
+{% if application.status == "APPROVED" %}
+<p> Approval time: {{ application.reviewed_at }} </p>
+{% endif %}
+
 <!--show the missing content form if the status is MISSING_DOCUMENT-->
 {% if application.status == "MISSING_DOCUMENTS" %}
 <p> Please <a href="{% url 'update_application' %}">click here</a> to update the application form.</p>
