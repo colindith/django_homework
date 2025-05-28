@@ -17,6 +17,7 @@ def user_login_view(request):
                 password=form.cleaned_data['password']
             )
             if user:
+                # login the user
                 login(request, user)
                 return redirect('apply')
             else:
