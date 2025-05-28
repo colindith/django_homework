@@ -29,5 +29,6 @@ def user_login_view(request):
 
 def user_logout_view(request):
     logout(request)
-    messages.success(request, "You are logged out successfully")
+    print("request: ", request)
+    messages.success(request, 'You are logged out successfully')
     return redirect('user_login')
