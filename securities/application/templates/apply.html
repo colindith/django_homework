@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Securities Application</title>
+</head>
+
+<body>
+{% if messages %}
+<ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h2>Please fill in the application form</h2>
+<form method="post">{% csrf_token %}{{ form.as_p }}
+<button type="submit">Submit</button>
+</form>
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'user_logout' %}" style="display:inline;">{% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% endif %}
+
+</body>
+</html>
