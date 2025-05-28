@@ -52,7 +52,7 @@ class ApplyViewTestCase(SimpleTestCase):
 
         # assert the repository methods were called
         mock_repo_inst.get_application_by_user.assert_called_once_with(mock_user)
-        mock_repo_inst.save_application_and_update_status.assert_called_once_with(mock_form, 'PENDING')
+        mock_repo_inst.save_application_and_update_status.assert_called_once_with(mock_form, mock_user, 'PENDING')
 
 
 class StatusViewTestCase(SimpleTestCase):
@@ -203,4 +203,4 @@ class UpdateApplicationViewTestCase(SimpleTestCase):
 
         # assert the repository methods were called
         mock_repo_inst.get_application_by_user.assert_called_once_with(mock_user, status='MISSING_DOCUMENTS', raise_404_if_not_exist=True)
-        mock_repo_inst.save_application_and_update_status.assert_called_once_with(mock_form, 'PENDING')
+        mock_repo_inst.save_application_and_update_status.assert_called_once_with(mock_form, mock_user, 'PENDING')
