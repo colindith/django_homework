@@ -1,0 +1,29 @@
+version: "3.9"
+
+services:
+  app:
+    build: ./securities
+#    command: gunicorn securities.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin123
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: securities_db
+      POSTGRES_USER: coffee
+      POSTGRES_PASSWORD: 123456
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+volumes:
+  postgres_data:
