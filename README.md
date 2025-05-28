@@ -20,6 +20,7 @@ docker-compose run app python manage.py createsuperuser
 http://127.0.0.1:8000/       # user login page
 http://127.0.0.1:8000/admin/ # admin page
 ```
+You may create a new user in admin or use the superuser account to login.
 ## Unit Test
 To run the unit test, you might want to fix the Python in a proper version. A convenient way to do so is to use uv. Here we assume that the uv tool is already being in your system. So we can skip the installment part.
 This command shows all the available python version in your computer.
