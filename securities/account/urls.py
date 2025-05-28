@@ -6,7 +6,7 @@ from . import views
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/login', permanent=True)),
+    path('', RedirectView.as_view(url='/account/login')),
     path('login', views.user_login_view, name='user_login'),
     path('logout', views.user_logout_view, name='user_logout'),
 ]
