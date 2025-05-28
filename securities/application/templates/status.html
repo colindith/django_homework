@@ -19,9 +19,6 @@
 <!--show the missing content form if the status is MISSING_DOCUMENT-->
 {% if application.status == "MISSING_DOCUMENTS" %}
 <p> Please <a href="{% url 'update_application' %}">click here</a> to update the application form.</p>
-<form method="post">{% csrf_token %}{{ form.as_p }}
-<button type="submit">Submit</button>
-</form>
 {% endif %}
 
 {% if user.is_authenticated %}

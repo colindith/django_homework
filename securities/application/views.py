@@ -17,7 +17,7 @@ def apply_view(request):
 
     if request.method == 'POST':
         form = ApplicationForm(request.POST)
-        repo.save_application_and_update_status(form, 'PENDING')
+        repo.save_application_and_update_status(form, request.user, 'PENDING')
         messages.success(request, "The application has been submitted. Please wait for reviewing.")
         return redirect('application_status')
     else:
@@ -49,7 +49,7 @@ def update_application_view(request):
     app = repo.get_application_by_user(request.user, status='MISSING_DOCUMENTS', raise_404_if_not_exist=True)
     if request.method == 'POST':
         form = ApplicationForm(request.POST, instance=app)
-        repo.save_application_and_update_status(form, 'PENDING')
+        repo.save_application_and_update_status(form, request.user, 'PENDING')
         messages.success(request, "The application has been submitted. Please wait for reviewing.")
         return redirect('application_status')
     else:

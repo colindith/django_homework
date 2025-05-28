@@ -26,8 +26,9 @@ class Repository:
             return getter(Application, user=user, status=status)
         return getter(Application, user=user)
 
-    def save_application_and_update_status(self, form, status):
+    def save_application_and_update_status(self, form, user, status):
         app = form.save(commit=False)
+        app.user = user
         app.status = status
         app.save()
 
