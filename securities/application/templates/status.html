@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Securities Application</title>
+</head>
+
+<h2>Application Status</h2>
+
+<body>
+{% if messages %}
+<ul>
+  {% for message in messages %}
+    <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<!--show the missing content form if the status is MISSING_DOCUMENT-->
+{% if application.status == "MISSING_DOCUMENTS" %}
+<p> Please <a href="{% url 'update_application' %}">click here</a> to update the application form.</p>
+<form method="post">{% csrf_token %}{{ form.as_p }}
+<button type="submit">Submit</button>
+</form>
+{% endif %}
+
+{% if user.is_authenticated %}
+    <form method="post" action="{% url 'user_logout' %}" style="display:inline;">{% csrf_token %}
+        <button type="submit">Logout</button>
+    </form>
+{% endif %}
+
+</body>
+</html>

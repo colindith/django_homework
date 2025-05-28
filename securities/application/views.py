@@ -5,20 +5,21 @@ from django.utils import timezone
 
 from .models import Application
 from .forms import ApplicationForm
+from .repository import get_repository
 
 
 @login_required(login_url='/accounts/login/')
 def apply_view(request):
-    existing_app = Application.objects.filter(user=request.user).first()
+    repo = get_repository()
+    existing_app = repo.get_application_by_user(request.user)
+
     if existing_app:
         return redirect('application_status')
 
     if request.method == 'POST':
         form = ApplicationForm(request.POST)
         if form.is_valid():
-            app = form.save(commit=False)
-            app.user = request.user
-            app.save()
+            repo.save_application_and_update_status(form, 'PENDING')
             messages.success(request, "The application has been submitted. Please wait for reviewing.")
             return redirect('application_status')
     else:
@@ -28,7 +29,8 @@ def apply_view(request):
 
 @login_required(login_url='/accounts/login/')
 def application_status_view(request):
-    app = get_object_or_404(Application, user=request.user)
+    repo = get_repository()
+    app = repo.get_application_by_user(request.user, raise_404_if_not_exist=True)
     context = {'application': app}
 
     print("app.status:", app.status)
@@ -45,13 +47,12 @@ def application_status_view(request):
 
 @login_required
 def update_application_view(request):
-    app = get_object_or_404(Application, user=request.user, status='MISSING_DOCUMENTS')
+    repo = get_repository()
+    app = repo.get_application_by_user(request.user, status='MISSING_DOCUMENTS', raise_404_if_not_exist=True)
     if request.method == 'POST':
         form = ApplicationForm(request.POST, instance=app)
         if form.is_valid():
-            form.save()
-            app.status = 'PENDING'
-            app.save()
+            repo.save_application_and_update_status(form, 'PENDING')
             messages.success(request, "The application has been submitted. Please wait for reviewing.")
             return redirect('application_status')
     else:
