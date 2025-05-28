@@ -4,10 +4,17 @@ from .models import Application
 
 
 def get_repository():
-    return Repository()
+    return repo
+
+
+def set_repository(new_repo):
+    global repo
+    repo = new_repo
+
 
 def filter_getter(model_class, **kwargs):
     return model_class.objects.filter(**kwargs).first()
+
 
 class Repository:
 
@@ -23,3 +30,6 @@ class Repository:
         app = form.save(commit=False)
         app.status = status
         app.save()
+
+
+repo = Repository()
